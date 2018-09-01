@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>首页</title>
+    <link href="__PUBLIC__/index/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="__PUBLIC__/index/assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+    <link href="__PUBLIC__/index/css/blog.css" rel="stylesheet">
+    <script src="__PUBLIC__/index/assets/js/ie-emulation-modes-warning.js"></script>
+
+  
+  </head>
+
+  <body>
+
+    <div class="blog-masthead">
+      <div class="container">
+        <nav class="blog-nav">
+          <a class="blog-nav-item active" href="{:url('index')}">首页</a>
+          {volist name="navres" id="vo"}
+          <a class="blog-nav-item" href="{if condition="$vo['type'] eq 0"}
+                                    {:url('lists/index',array('cateid'=>$vo['id']))}
+                                    {else /}
+                                    {:url('guest/index',array('cateid'=>$vo['id']))}
+                                    {/if}">{$vo.catename}</a>
+          {/volist}
+          <!-- neq 不等于 -->
+            {if condition="session('username') neq ''"}  
+            <a class="blog-nav-item" href="#"><?php echo session('username');?>          
+            </a>
+            {else /}
+            <a class="blog-nav-item" href="{:url('Index/login')}">登录</a>
+            <a class="blog-nav-item" href="{:url('Index/register')}">注册</a>
+            {/if}
+          <a class="blog-nav-item" href="{:url('Index/logout')}">退出</a>
+
+
+        </nav>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-8 blog-main">
+            {volist name="artres" id="vo"}
+            <div class="post multi-post cate2 auth1">
+            <h4 class="post-date">{$vo.time}</h4>
+            <h2 class="post-title"><a href="{:url('Article/index',array('id'=>$vo['id']))}">{$vo.title}</a></h2>
+            <div class="post-body"><p>描述：{$vo.desc}</p>
+            {if condition="$vo['pic'] neq ''"}  
+            <p style="text-indent: 0em;"><a title="" target="_self" href="{:url('Article/index',array('id'=>$vo['id']))}"><img src="{$vo.pic}"/></a></p>
+            {/if}
+            </div>
+            <h5 class="post-tags">关键词: <span class="tags">
+            <?php
+              $arr=explode(',', $vo['keywords']);
+              foreach ($arr as $k => $v) {
+                echo "<a href='http://myblog.com/index/Tags/index/tags/$v'>$v</a>";
+                echo ' ';
+              }
+            ?>
+            </span></h5>
+            <h6 class="post-footer">
+              发布:渣渣 | 分类:{$vo.catename} | 评论:6 | 浏览:{$vo.click} | <a href="{:url('Article/index',array('id'=>$vo['id']))}">阅读全文 > </a>
+            </h6>
+            </div>
+            {/volist}
+          <div class="post pagebar">{$artres->render()}</div>
+        </div>
+          <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+              <div class="sidebar-module sidebar-module-inset">
+                  <h4>文章搜索：</h4>
+                  <form method="post" action="{:url('Search/index')}">
+                  <input type="text" name="keywords" id="edtSearch" size="12" /> 
+                  <input type="submit" value="提交" id="btnPost" />
+                  </form>
+              </div>
+          </div>
+        </div>
+          
+        </div><!-- /.blog-main -->
+
+      </div><!-- /.row -->
+
+    </div><!-- /.container -->
+
+    <footer class="blog-footer">
+      <p>Blog template built for <a href="http://getbootstrap.com">Bootstrap</a> by <a href="https://twitter.com/mdo">@mdo</a>.</p>
+      <p>
+        <a href="#">Back to top</a>
+      </p>
+    </footer>
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="__PUBLIC__/index/assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="__PUBLIC__/index/dist/js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="__PUBLIC__/index/assets/js/ie10-viewport-bug-workaround.js"></script>
+  </body>
+</html>

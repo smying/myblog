@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>首页</title>
+    <link href="__PUBLIC__/index/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="__PUBLIC__/index/assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+    <link href="__PUBLIC__/index/css/blog.css" rel="stylesheet">
+    <script src="__PUBLIC__/index/assets/js/ie-emulation-modes-warning.js"></script>
+
+  
+  </head>
+
+  <body>
+
+    <div class="blog-masthead">
+      <div class="container">
+        <nav class="blog-nav">
+          <a class="blog-nav-item active" href="{:url('Index/index')}">首页</a>
+          {volist name="navres" id="vo"}
+          <a class="blog-nav-item" href="{if condition="$vo['type'] eq 0"}
+                                    {:url('lists/index',array('cateid'=>$vo['id']))}
+                                    {else /}
+                                    {:url('guest/index',array('cateid'=>$vo['id']))}
+                                    {/if}">{$vo.catename}</a>
+          {/volist}
+          <!-- neq 不等于 -->
+            {if condition="session('username') neq ''"}  
+            <a class="blog-nav-item" href="#"><?php echo session('username');?>          
+            </a>
+            {else /}
+            <a class="blog-nav-item" href="{:url('Index/login')}">登录</a>
+            <a class="blog-nav-item" href="{:url('Index/register')}">注册</a>
+            {/if}
+          <a class="blog-nav-item" href="{:url('Index/logout')}">退出</a>
+
+
+        </nav>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-8 blog-main">
+             <div id="divMain">
+                    <br>
+                    <ul style="list-style: none;">
+                        {volist name="guestres" id="vo"}
+                        <li>
+                            <div>
+                                <img class="avatar" src="http://cn.gravatar.com/avatar/75e215cea7a9364665ca688b5a23a58a?s=40&d=mm" alt="" width="32" /> 
+                                <strong>{$vo.nickname}</strong>
+                            </div>
+                            <div style="color: gray;">
+                                <small> 发布于 {$vo.time|date="Y年m月d日 H:i:s",###}  
+                            </div>
+                            <div style="color: orange;font-style: italic;font-weight: bold;">{$vo.content}</div>
+                        </li>
+                        <br>
+                        {/volist}
+                    </ul>
+                    <div class="post" id="divCommentPost">
+                        <p class="posttop"><a name="comment">发表留言:</a></p>
+                        <form id="frmSumbit" target="_self" method="post" action="{:url('guest/index')}">
+                            <input type="hidden" name="inpId" id="inpId" value="2" />
+                            <input type="hidden" name="inpArticle" id="inpArticle" value="" />
+                            <input type="hidden" name="inpRevID" id="inpRevID" value="" />
+                            <p>
+                                <input type="text" name="inpName" id="inpName" class="text" value="" size="28" tabindex="1" />
+                                <label for="inpName">名称（必填）</label>
+                            </p>
+                            <p>
+                                <input type="text" name="inpEmail" id="inpEmail" class="text" value="" size="28" tabindex="2" />
+                                <label for="inpEmail">邮箱</label>
+                            </p>
+                            <p>
+                                <input type="text" name="inpHomePage" id="inpHomePage" class="text" value="" size="28" tabindex="3" />
+                                <label for="inpHomePage">网站链接</label>
+                            </p>
+                            <p>
+                                <label for="txaArticle">正文（必填）(留言最长字数:1000)</label>
+                            </p>
+                            <p>
+                                <textarea name="txaArticle" id="txaArticle" cols="50" rows="4" tabindex="5"></textarea>
+                            </p>
+                            <p>
+                                <input name="btnSumbit" type="submit" tabindex="6" value="提交" class="button" />
+                            </p>
+                        </form>
+                        <p class="postbottom">◎欢迎参与讨论，请在这里发表您的看法、交流您的观点。</p>
+                    </div>
+                </div>
+        </div><!-- /.blog-main -->
+
+      </div><!-- /.row -->
+
+    </div><!-- /.container -->
+
+    <footer class="blog-footer">
+      <p>Blog template built for <a href="http://getbootstrap.com">Bootstrap</a> by <a href="https://twitter.com/mdo">@mdo</a>.</p>
+      <p>
+        <a href="#">Back to top</a>
+      </p>
+    </footer>
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="__PUBLIC__/index/assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="__PUBLIC__/index/dist/js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="__PUBLIC__/index/assets/js/ie10-viewport-bug-workaround.js"></script>
+  </body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>管理员登录</title>
+    <link href="__PUBLIC__/admin/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="__PUBLIC__/admin/assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+    <link href="__PUBLIC__/admin/css/signin.css" rel="stylesheet">
+    <script src="__PUBLIC__/admin/assets/js/ie-emulation-modes-warning.js"></script>
+  </head>
+
+  <body>
+
+    <div class="container">
+       <form class="form-signin" action="" method="post" novalidate>
+        <!-- <input type="hidden" name="__token__" value="{$Request.token}" /> -->
+        <h2 class="form-signin-heading">管理员登录</h2>
+        <label for="inputUser" class="sr-only">用户名</label>
+        <input type="text" id="inputUser" class="form-control" placeholder="用户名" required autofocus name="username">
+        <label for="inputPassword" class="sr-only">密码</label>
+        <input type="password" id="inputPassword" class="form-control" placeholder="密码" required name="password">
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" value="1" name="remember"> 下次登录
+          </label>
+        </div>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
+      </form>
+
+    </div>
+
+    <script src="__PUBLIC__/index/assets/js/ie10-viewport-bug-workaround.js"></script>
+  </body>
+</html>

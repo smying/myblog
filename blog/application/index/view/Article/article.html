@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>首页</title>
+    <link href="__PUBLIC__/index/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="__PUBLIC__/index/assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+    <link href="__PUBLIC__/index/css/blog.css" rel="stylesheet">
+    <script src="__PUBLIC__/index/assets/js/ie-emulation-modes-warning.js"></script>
+
+  
+  </head>
+<body>
+	 <div class="blog-masthead">
+      <div class="container">
+        <nav class="blog-nav">
+          <a class="blog-nav-item active" href="{:url('Index/index')}">首页</a>
+          {volist name="navres" id="vo"}
+          <a class="blog-nav-item" href="{if condition="$vo['type'] eq 0"}
+                                    {:url('lists/index',array('cateid'=>$vo['id']))}
+                                    {else /}
+                                    {:url('guest/index',array('cateid'=>$vo['id']))}
+                                    {/if}">{$vo.catename}</a>
+          {/volist}
+          <!-- neq 不等于 -->
+            {if condition="session('username') neq ''"}  
+            <a class="blog-nav-item" href="#"><?php echo session('username');?>          
+            </a>
+            {else /}
+            <a class="blog-nav-item" href="{:url('Index/login')}">登录</a>
+            <a class="blog-nav-item" href="{:url('Index/register')}">注册</a>
+            {/if}
+          <a class="blog-nav-item" href="{:url('Index/logout')}">退出</a>
+
+
+        </nav>
+      </div>
+    </div>
+        <div class="container">
+        <div class="row">
+            <div class="col-sm-8 blog-main">              
+                <div class="post single-post cate2 auth1">                 
+                    <h4 class="post-date">{$arts.time}</h4>
+                    <h2 class="post-title">{$arts.title}</h2> {if condition="$arts['pic'] neq ''"}
+                    <img src="{$arts.pic}" /></a>
+                    </p>
+                    {/if}
+                    <div class="post-body">
+                        {$arts.content}
+                    </div>
+                    <h5 class="post-tags">Tags: 
+                      <span class="tags">
+                      <?php
+                        $arr=explode(',', $arts['keywords']);
+                        foreach ($arr as $k => $v) {
+                          echo "<a href='http://myblog.com/index/Tags/index/tags/$v'>$v</a>";
+                          echo ' ';
+                        }
+                      ?>
+                    </span>
+                  </h5>
+                  <div class="sidebar-module sidebar-module-inset">
+                  <h4>相关文章：</h4>
+                  <ol class="list-unstyled">
+                    <li class="msgarticle">
+                        {volist name="ralateres" id="vo"}
+                        <p><a  href="{:url('article/index',array('id'=>$vo[0]))}">{$vo.1}</a>  ({$vo.2})</p>
+                        {/volist}
+                      </li>
+                  </ol>
+              </div>
+
+                  <h6 class="post-footer">
+                    发布:渣渣 | 分类:{$arts.catename} | 评论:5 | 浏览:<span id="spn75">{$arts.click} | 收藏:{$arts.like}</span>
+                  </h6>
+                    <div class="post-nav">
+                        {if condition="$prev eq ''"}
+                        {else/}
+                        <a class="l" href="{:url('article/index',array('id'=>$prev))}">上一篇 »</a> {/if} {if condition="$next eq ''"}
+                        {else/}
+                        <a class="r" href="{:url('article/index',array('id'=>$next))}" style="float: right;">下一篇 »</a> {/if}
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    </div>
+</body>
+</html>

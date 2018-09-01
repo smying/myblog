@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>栏目管理</title>
+    <!--'__PUBLIC__' => '/static'-->
+    {include file="public/resource" /}  //包含资源模板
+  </head>
+
+  <body>
+    {include file="public/header" /}
+
+    <div class="container-fluid">
+      <div class="row">
+        {include file="public/sidebar" /}
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+          <h1 class="page-header">栏目信息</h1>        
+          <div class="table-responsive">
+            <a class="link-update" href="{:url('article/add')}">新增文章</a>
+            <table class="table table-striped">
+
+              <thead>
+                  <tr>
+                      <th>ID</th>
+                      <th>作者ID</th>
+                      <th>栏目id</th>                     
+                      <th>标题</th>
+                      <th>关键词</th>
+                      <th>描述</th>
+                      <th>图片</th>
+                      <th>内容</th>
+                      <th>点击量</th>
+                      <th>点赞数</th>
+                      <th>收藏数</th>
+                      <th>发布时间</th>
+                  </tr>
+              </thead>
+              <tbody>
+
+                {volist name="articles" id="vo"}
+                <tr>
+                  <th>{$vo.id}</th>
+                  <th>{$vo.author_id}</th>
+                  <th>{$vo.cateid}</th>
+                  <th>{$vo.title}</th>
+                  <th>{$vo.keywords}</th>
+                  <th>{$vo.desc}</th>
+                  <th>{if condition="$vo['pic'] neq ''"}
+                      <img src="{$vo.pic}" height="50">             
+                      {else /} 
+                      暂无图片
+                      {/if}
+                  </th>
+                  <th>{$vo.content}</th>
+                  <th>{$vo.click}</th>
+                  <th>{$vo.like}</th>
+                  <th>{$vo.collection}</th>
+                  <th>{$vo.time}</th>
+                  <th>
+                    <a href="{:url('edit',array('id'=>$vo.id))}">修改</a>
+                    <a href="{:url('del',array('id'=>$vo.id))}" onclick="return confirm('确定删除该文章?')">删除</a>
+                  </th>
+                </tr>
+                  {/volist}
+              </tbody>
+          </table>
+          <div>{$articles->render()}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="__PUBLIC__/admin/assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="__PUBLIC__/admin/dist/js/bootstrap.min.js"></script>
+    <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
+    <script src="__PUBLIC__/admin/assets/js/vendor/holder.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="__PUBLIC__/admin/assets/js/ie10-viewport-bug-workaround.js"></script>
+  </body>
+</html>

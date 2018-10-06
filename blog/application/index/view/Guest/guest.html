@@ -29,13 +29,14 @@
                                     {:url('guest/index',array('cateid'=>$vo['id']))}
                                     {/if}">{$vo.catename}</a>
           {/volist}
+          <a class="blog-nav-item" href="{:url('guest/index')}">评论</a>
           <!-- neq 不等于 -->
             {if condition="session('username') neq ''"}  
             <a class="blog-nav-item" href="#"><?php echo session('username');?>          
             </a>
             {else /}
-            <a class="blog-nav-item" href="{:url('Index/login')}">登录</a>
-            <a class="blog-nav-item" href="{:url('Index/register')}">注册</a>
+            <a class="blog-nav-item" href="http://myblog.com/login">登录</a>
+            <a class="blog-nav-item" href="http://myblog.com/register">注册</a>
             {/if}
           <a class="blog-nav-item" href="{:url('Index/logout')}">退出</a>
 
@@ -82,12 +83,10 @@
                                 <input type="text" name="inpHomePage" id="inpHomePage" class="text" value="" size="28" tabindex="3" />
                                 <label for="inpHomePage">网站链接</label>
                             </p>
-                            <p>
-                                <label for="txaArticle">正文（必填）(留言最长字数:1000)</label>
-                            </p>
-                            <p>
-                                <textarea name="txaArticle" id="txaArticle" cols="50" rows="4" tabindex="5"></textarea>
-                            </p>
+                            <div id="div1">
+                                <p>正文（必填）(留言最长字数:1000)</p>
+                            </div>
+                            <textarea name="txaArticle" id="txaArticle" style="width:100%; height:200px; display: none;"></textarea>
                             <p>
                                 <input name="btnSumbit" type="submit" tabindex="6" value="提交" class="button" />
                             </p>
@@ -116,6 +115,21 @@
     <script>window.jQuery || document.write('<script src="__PUBLIC__/index/assets/js/vendor/jquery.min.js"><\/script>')</script>
     <script src="__PUBLIC__/index/dist/js/bootstrap.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
     <script src="__PUBLIC__/index/assets/js/ie10-viewport-bug-workaround.js"></script>
+    <script src="__PUBLIC__/index/js/wangEditor.min.js"></script>
+
+    <script type="text/javascript">
+         var E = window.wangEditor
+        var editor = new E('#div1')
+        var $text1 = $('#txaArticle')
+        editor.customConfig.onchange = function (html) {
+            // 监控变化，同步更新到 textarea
+            $text1.val(html)
+        }
+        editor.create()
+        // 初始化 textarea 的值
+        $text1.val(editor.txt.html())
+    </script>
   </body>
 </html>

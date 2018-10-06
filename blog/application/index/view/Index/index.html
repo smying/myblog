@@ -2,61 +2,82 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
+    <meta name="renderer" content="webkit">
     <title>首页</title>
-    <link href="__PUBLIC__/index/dist/css/bootstrap.min.css" rel="stylesheet">
 
+    <!-- layui -->
+    <link rel="stylesheet" href="__PUBLIC__/index/layui/css/layui.css"  media="all">
+    <!-- 顺序 -->
+    <!-- bootstrap -->
+    <link href="__PUBLIC__/index/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="__PUBLIC__/index/assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+
     <link href="__PUBLIC__/index/css/blog.css" rel="stylesheet">
+    <!-- wang Editor -->
     <script src="__PUBLIC__/index/assets/js/ie-emulation-modes-warning.js"></script>
 
-  
+    <script src="__PUBLIC__/index/js/selectuser.js"></script>
+
+    <!-- font asesome -->
+    <!-- <link rel="stylesheet" href="__PUBLIC__/index/css/font-awesome.min.css"> -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <!-- swiper -->
+    <link rel="stylesheet" href="__PUBLIC__/index/css/swiper.min.css">
+
+    <script type="text/javascript">
+      function Search()
+      {
+        var formData = $("#indexSearch").serialize();
+        $.ajax({
+          type:"post",
+          url:"{:url('Search/showContact')}",
+          data:formData,
+          success:function(data){
+            $("#searchinfo").empty();
+            $("#searchinfo").append(data);
+            alert(JSON.stringify(data));
+          }
+        });
+      }
+   
+    </script> 
   </head>
 
   <body>
+    {include file="public/header" /}
 
-    <div class="blog-masthead">
-      <div class="container">
-        <nav class="blog-nav">
-          <a class="blog-nav-item active" href="{:url('index')}">首页</a>
-          {volist name="navres" id="vo"}
-          <a class="blog-nav-item" href="{if condition="$vo['type'] eq 0"}
-                                    {:url('lists/index',array('cateid'=>$vo['id']))}
-                                    {else /}
-                                    {:url('guest/index',array('cateid'=>$vo['id']))}
-                                    {/if}">{$vo.catename}</a>
-          {/volist}
-          <!-- neq 不等于 -->
-            {if condition="session('username') neq ''"}  
-            <a class="blog-nav-item" href="#"><?php echo session('username');?>          
-            </a>
-            {else /}
-            <a class="blog-nav-item" href="{:url('Index/login')}">登录</a>
-            <a class="blog-nav-item" href="{:url('Index/register')}">注册</a>
-            {/if}
-          <a class="blog-nav-item" href="{:url('Index/logout')}">退出</a>
-
-
-        </nav>
+    <!-- swiper -->
+    <div class="swiper-container" style="width: 100%;height: 350px;">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide"><img src="__PUBLIC__/index/images/1.png" style="width: 100%;height: 300px;"></div>
+        <div class="swiper-slide"><img src="__PUBLIC__/index/images/168.jpg" style="width: 100%;height: 300px;-webkit-filter: brightness(0.40);filter: brightness(0.40);"></div>
+        <div class="swiper-slide"><img src="__PUBLIC__/index/images/taohua1.png" style="width: 100%;height: 300px;-webkit-filter: brightness(0.60);filter: brightness(0.60);"></div>
       </div>
-    </div>
-
+     
+      <!-- 导航按钮 -->
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-button-next"></div>  
+    </div><!--  /.swiper-container  -->
+  
+    <!-- 文章列表 -->
     <div class="container">
       <div class="row">
         <div class="col-sm-8 blog-main">
             {volist name="artres" id="vo"}
-            <div class="post multi-post cate2 auth1">
-            <h4 class="post-date">{$vo.time}</h4>
-            <h2 class="post-title"><a href="{:url('Article/index',array('id'=>$vo['id']))}">{$vo.title}</a></h2>
-            <div class="post-body"><p>描述：{$vo.desc}</p>
+            <div class="post multi-post cate2 auth1" style="margin-top: 20px;">
+            <h3 class="post-title"><a href="{:url('Article/index',array('id'=>$vo['id']))}" style="color: black;">{$vo.title}</a></h3>
+
+            <div class="post-body"><p style="color: #999999;">描述:{$vo.desc}</p>
             {if condition="$vo['pic'] neq ''"}  
-            <p style="text-indent: 0em;"><a title="" target="_self" href="{:url('Article/index',array('id'=>$vo['id']))}"><img src="{$vo.pic}"/></a></p>
+            
             {/if}
             </div>
-            <h5 class="post-tags">关键词: <span class="tags">
+            <h6 class="post-tags" style="color: #999999;">{$vo.time}  关键词: <span class="tags">
+
             <?php
               $arr=explode(',', $vo['keywords']);
               foreach ($arr as $k => $v) {
@@ -64,46 +85,74 @@
                 echo ' ';
               }
             ?>
-            </span></h5>
-            <h6 class="post-footer">
-              发布:渣渣 | 分类:{$vo.catename} | 评论:6 | 浏览:{$vo.click} | <a href="{:url('Article/index',array('id'=>$vo['id']))}">阅读全文 > </a>
+           </span></h6>
+            
+            <h6 class="post-footer" style="color: #999999;">
+              发布:渣渣 | 分类:{$vo.catename} | 评论:6 | 浏览:{$vo.click} | <a href="{:url('Article/index',array('id'=>$vo['id']))}">&nbsp;&nbsp;阅读全文 > </a>
             </h6>
             </div>
+            <hr style="height:1px;border:none;border-top:1px dashed #c6cfd2;" />
             {/volist}
-          <div class="post pagebar">{$artres->render()}</div>
+          <div class="post pagebar" style="bottom:140px;">{$artres->render()}</div>
         </div>
+
           <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
               <div class="sidebar-module sidebar-module-inset">
-                  <h4>文章搜索：</h4>
-                  <form method="post" action="{:url('Search/index')}">
-                  <input type="text" name="keywords" id="edtSearch" size="12" /> 
-                  <input type="submit" value="提交" id="btnPost" />
-                  </form>
+                  <h4>文章相关：</h4>      
+
               </div>
           </div>
-        </div>
-          
-        </div><!-- /.blog-main -->
+      </div>         
+    </div><!-- /.blog-main -->
 
-      </div><!-- /.row -->
-
-    </div><!-- /.container -->
-
-    <footer class="blog-footer">
-      <p>Blog template built for <a href="http://getbootstrap.com">Bootstrap</a> by <a href="https://twitter.com/mdo">@mdo</a>.</p>
-      <p>
-        <a href="#">Back to top</a>
-      </p>
-    </footer>
-
+    {include file="public/footer" /}
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
+    <!-- layui -->
+    <script src="__PUBLIC__/index/layui/layui.js" charset="utf-8"></script>
+    <!-- swiper -->
+    <script src="__PUBLIC__/index/js/swiper.min.js"></script>   
+    <script>
+    layui.use(['util', 'layer'], function(){
+      var util = layui.util
+      ,layer = layui.layer;
+      //固定块
+      util.fixbar({
+        bar1: true
+        ,top: true
+        ,css: {right: 50, bottom: 100}
+        ,bgcolor: '#393D49'
+        ,showHeight: 100
+        ,click: function(type){
+          console.log(type);
+          if(type === 'bar1'){
+           layer.msg('在这里您可以发表文章！')
+          } else if(type === 'top') {     
+          }
+        }
+      });
+      
+    });
+        
+      var mySwiper = new Swiper ('.swiper-container', {
+        autoplay: true,//可选选项，自动滑动
+        loop: true, // 循环模式选项
+     
+        // 前进后退按钮
+        navigation: {
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev',
+        },
+        
+      })        
+ ` `</script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="__PUBLIC__/index/assets/js/vendor/jquery.min.js"><\/script>')</script>
     <script src="__PUBLIC__/index/dist/js/bootstrap.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="__PUBLIC__/index/assets/js/ie10-viewport-bug-workaround.js"></script>
+    
   </body>
 </html>

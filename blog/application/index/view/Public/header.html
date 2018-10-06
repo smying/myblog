@@ -1,0 +1,34 @@
+    <div class="blog-masthead">
+      <div class="container">
+        <nav class="blog-nav">
+          <a class="blog-nav-item active" href="{:url('index')}">首页</a>
+          {volist name="navres" id="vo"}
+            <a class="blog-nav-item" href="{if condition="$vo['type'] eq 0"}
+                                    {:url('lists/index',array('cateid'=>$vo['id']))}
+                                    {else /}
+                                    {:url('guest/index',array('cateid'=>$vo['id']))}
+                                    {/if}">{$vo.catename}</a>
+          {/volist}
+          <!-- neq 不等于 -->
+          <a class="blog-nav-item" href="{:url('guest/index')}">评论</a>
+            {if condition="session('username') neq ''"}  
+            <a class="blog-nav-item" href="#"><?php echo session('username');?>          
+            </a>
+            {else /}
+            <a class="blog-nav-item" href="http://myblog.com/login">登录</a>
+            <a class="blog-nav-item" href="http://myblog.com/register">注册</a>
+            {/if}
+          <a class="blog-nav-item" href="{:url('Index/logout')}">退出</a>
+          <form class="navbar-form navbar-right" method="post" id="indexSearch" 
+            action="{:url('Search/index')}" style="height: 26px;">        
+            <input type="text" class="form-control" placeholder="Search..." name="keywords" id="edtSearch" size="12"  style="height: 26px;" onkeydown="Search()" />
+            <!-- <input type="submit" value="提交" id="btnPost" /> -->
+            <button type="submit" class="btn btn-default" style="height: 26px;line-height: 13px;" id="btnPost">
+              <i class="fa fa-search" aria-hidden="true"></i>
+            </button>
+
+          </form>
+          <span id="searchinfo"></span>     
+        </nav>
+      </div>
+    </div>

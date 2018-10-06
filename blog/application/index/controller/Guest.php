@@ -14,9 +14,9 @@ class Guest extends Nav
     			'time'=>time(),
     		];
     		if(\think\Db::name('guest')->insert($data)){
-    			return $this->success('留言成功,正在跳转','Guest/index');
+    			return $this->redirect('Guest/index');
     		}else{
-    			return $this->success('留言提交失败','Guest/index');
+    			return $this->redirect('Guest/index');
     		}
     		return;
     	}

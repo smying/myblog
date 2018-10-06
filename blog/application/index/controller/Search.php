@@ -17,4 +17,17 @@ class Search extends Nav
     	}
         return $this->fetch('search');
     }
+    public function showContact($keywords)
+    {
+        if($keywords){
+            $map['title']  = ['like','%'.$keywords.'%'];
+            $seares=\think\Db::name('article')->where($map)->order('id desc')->find();
+            return json($seares['title']);
+
+        }else{
+            $map['title']  = ['like','%'.$keywords.'%'];
+            $seares=\think\Db::name('article')->order('id desc')->limit(5);
+            return ['title'=>$seares['title']];//返回title，返回对象在页面上显示
+        }
+    }
 }

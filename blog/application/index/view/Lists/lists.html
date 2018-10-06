@@ -28,6 +28,8 @@
                                     {/if}">{$vo.catename}</a>
           {/volist}
           <!-- neq 不等于 -->
+          <a class="blog-nav-item" href="{:url('guest/index')}">评论</a>
+          
             {if condition="session('username') neq ''"}  
             <a class="blog-nav-item" href="#"><?php echo session('username');?>          
             </a>

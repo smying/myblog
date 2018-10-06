@@ -5,7 +5,7 @@ class Index extends Nav
 {
     public function index()
     {
-    	$artres= \think\Db::name('article')->alias('a')->join('cate c','c.ID = a.cateid','LEFT')->field('a.id,a.title,a.pic,a.time,a.desc,a.click,a.like,a.keywords,c.catename')->order('a.id desc')->paginate(2);
+    	$artres= \think\Db::name('article')->alias('a')->join('cate c','c.ID = a.cateid','LEFT')->field('a.id,a.title,a.pic,a.time,a.desc,a.click,a.like,a.keywords,c.catename')->order('a.id desc')->paginate(4);
     	$this->assign('artres',$artres);
         return $this->fetch();
     }
@@ -30,10 +30,9 @@ class Index extends Nav
                		// {
                		// 	cookie('remember_username', trim($rsu['username']),3600*24*7);
                		// 	cookie('remember_password', trim($rsu['password']),3600*24*7);
-               		// }
-               		
+               		// }              		
 
-                	return $this->success('登录成功',url('index'));
+                    return $this->redirect('index');
                 	// redirect(U('index'));
                }else{
                		return $this->error('密码错误');
@@ -115,7 +114,7 @@ class Index extends Nav
     }
     public function logout(){
 	    session(null);//退出清空session
-	    return $this->success('退出成功',url('login'));//跳转到登录页面
+	    return $this->redirect('login');//跳转到登录页面
     }
     public function confirmEmail($email)
     {

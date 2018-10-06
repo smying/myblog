@@ -12,6 +12,7 @@
     <link href="__PUBLIC__/index/assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
     <link href="__PUBLIC__/index/css/blog.css" rel="stylesheet">
     <script src="__PUBLIC__/index/assets/js/ie-emulation-modes-warning.js"></script>
+    <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.10&key="></script> 
 
   
   </head>
@@ -64,6 +65,10 @@
                       ?>
                     </span>
                   </h5>
+                  
+                  <!-- <div id="container" style="width: 300px;height: 180px;"> -->
+                    
+                  </div>
                   <div class="sidebar-module sidebar-module-inset">
                   <h4>相关文章：</h4>
                   <ol class="list-unstyled">
@@ -91,5 +96,12 @@
         </div>
     </div>
     </div>
+    <script type="text/javascript">
+       var map = new AMap.Map('container', {
+        zoom:11,//
+        center: [120.108478, 30.220671],//中心点坐标
+        viewMode:'3D'//使用3D视图
+    });
+    </script>
 </body>
 </html>
